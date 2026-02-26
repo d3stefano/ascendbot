@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  bot:
+    image: ascendbot:latest
+    build: .
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - MONGO_URI=mongodb://mongo:27017/botdb
+    volumes:
+      - bot_data:/app/data
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+
+volumes:
+  bot_data:
+  mongo_data:
